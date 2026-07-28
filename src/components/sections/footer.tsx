@@ -14,9 +14,6 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Designed & built with Next.js, TypeScript, and Tailwind CSS
-            </p>
-            <p className="text-sm text-muted-foreground">
               &copy; {new Date().getFullYear()} Mohd Afnan Shahab
             </p>
           </div>
