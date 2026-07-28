@@ -14,6 +14,9 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
+              🤝 Let&apos;s build something amazing together.
+            </p>
+            <p className="text-sm text-muted-foreground">
               &copy; {new Date().getFullYear()} Mohd Afnan Shahab
             </p>
           </div>
