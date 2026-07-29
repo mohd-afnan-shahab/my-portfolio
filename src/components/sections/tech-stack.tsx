@@ -1,104 +1,174 @@
 'use client';
 
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/animated-section';
+import { motion } from 'framer-motion';
+import { AnimatedSection } from '@/components/ui/animated-section';
 import { SectionHeading } from '@/components/ui/section-heading';
 
-const techCategories = [
+/*
+  Design rationale:
+  - Two proficiency tiers with meaningful color distinction:
+    "daily" = tools used every day at work (solid indigo)
+    "familiar" = tools used regularly but not daily (subtle outline)
+  - No testing methodologies listed — only actual tools
+  - AI section lists real technologies, not buzzwords
+  - Categories ordered by what a recruiter cares about most:
+    Languages → Frontend → Backend → Testing → DevOps → AI
+  - 2-column grid on desktop for visual balance
+  - Each category has a numbered index for subtle visual hierarchy
+*/
+
+const categories = [
   {
-    label: 'Frontend',
+    title: 'Languages',
+    index: '01',
     techs: [
-      { name: 'React', level: 'primary' },
-      { name: 'TypeScript', level: 'primary' },
-      { name: 'JavaScript', level: 'primary' },
-      { name: 'HTML', level: 'secondary' },
-      { name: 'CSS', level: 'secondary' },
-      { name: 'Next.js', level: 'secondary' },
-      { name: 'Tailwind CSS', level: 'secondary' },
+      { name: 'TypeScript', tier: 'daily' },
+      { name: 'JavaScript', tier: 'daily' },
+      { name: 'C#', tier: 'daily' },
+      { name: 'SQL', tier: 'daily' },
+      { name: 'HTML', tier: 'familiar' },
+      { name: 'CSS', tier: 'familiar' },
     ],
   },
   {
-    label: 'Backend',
+    title: 'Frontend',
+    index: '02',
     techs: [
-      { name: 'C#', level: 'primary' },
-      { name: '.NET', level: 'primary' },
-      { name: 'ASP.NET', level: 'primary' },
-      { name: 'REST APIs', level: 'primary' },
-      { name: 'SQL Server', level: 'primary' },
+      { name: 'React', tier: 'daily' },
+      { name: 'Next.js', tier: 'familiar' },
+      { name: 'Tailwind CSS', tier: 'familiar' },
+      { name: 'Framer Motion', tier: 'familiar' },
     ],
   },
   {
-    label: 'Testing & Automation',
+    title: 'Backend',
+    index: '03',
     techs: [
-      { name: 'Playwright', level: 'primary' },
-      { name: 'Tricentis Tosca', level: 'primary' },
-      { name: 'Postman', level: 'primary' },
-      { name: 'API Testing', level: 'secondary' },
-      { name: 'E2E Testing', level: 'secondary' },
-      { name: 'Regression Testing', level: 'secondary' },
-      { name: 'Integration Testing', level: 'secondary' },
+      { name: '.NET', tier: 'daily' },
+      { name: 'ASP.NET', tier: 'daily' },
+      { name: 'REST APIs', tier: 'daily' },
+      { name: 'SQL Server', tier: 'daily' },
     ],
   },
   {
-    label: 'Tools & DevOps',
+    title: 'Testing',
+    index: '04',
     techs: [
-      { name: 'Git', level: 'primary' },
-      { name: 'Azure DevOps', level: 'primary' },
-      { name: 'Jira', level: 'primary' },
-      { name: 'VS Code', level: 'secondary' },
-      { name: 'Visual Studio', level: 'secondary' },
-      { name: 'qTest', level: 'secondary' },
+      { name: 'Playwright', tier: 'daily' },
+      { name: 'Postman', tier: 'daily' },
+      { name: 'Tricentis Tosca', tier: 'familiar' },
+      { name: 'qTest', tier: 'familiar' },
     ],
   },
   {
-    label: 'AI & Emerging',
+    title: 'DevOps & Tools',
+    index: '05',
     techs: [
-      { name: 'LLMs', level: 'learning' },
-      { name: 'OpenAI APIs', level: 'learning' },
-      { name: 'RAG', level: 'learning' },
-      { name: 'Prompt Engineering', level: 'learning' },
-      { name: 'AI Agents', level: 'learning' },
-      { name: 'Generative AI', level: 'learning' },
+      { name: 'Git', tier: 'daily' },
+      { name: 'Azure DevOps', tier: 'daily' },
+      { name: 'Jira', tier: 'daily' },
+      { name: 'VS Code', tier: 'familiar' },
+      { name: 'Visual Studio', tier: 'familiar' },
+    ],
+  },
+  {
+    title: 'AI & ML',
+    index: '06',
+    techs: [
+      { name: 'OpenAI APIs', tier: 'familiar' },
+      { name: 'LLMs', tier: 'familiar' },
+      { name: 'RAG', tier: 'familiar' },
+      { name: 'AI Agents', tier: 'familiar' },
+      { name: 'Prompt Engineering', tier: 'familiar' },
     ],
   },
 ];
 
+const pillVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.04,
+      duration: 0.4,
+      ease: [0.25, 0.4, 0.25, 1],
+    },
+  }),
+};
+
 export function TechStack() {
   return (
     <section id="skills" className="section-padding relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/[0.02] to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/[0.015] to-transparent" />
       <div className="container-custom relative">
         <AnimatedSection>
           <SectionHeading
             label="Tech Stack"
-            title="Technologies I work with"
-            description="The tools and frameworks I use to build, test, and ship enterprise software."
+            title="Tools of the trade"
+            description="Technologies I use daily to build, test, and ship enterprise software."
           />
         </AnimatedSection>
 
-        <div className="space-y-10">
-          {techCategories.map((category, i) => (
-            <AnimatedSection key={category.label} delay={i * 0.1}>
-              <div className="glass p-6 md:p-8">
-                <h3 className="text-sm font-mono text-indigo-400 mb-4 uppercase tracking-wider">
-                  {category.label}
-                </h3>
-                <StaggerContainer className="flex flex-wrap gap-3">
-                  {category.techs.map((tech) => (
-                    <StaggerItem key={tech.name}>
-                      <span
-                        className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 ${
-                          tech.level === 'primary'
-                            ? 'bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 hover:bg-indigo-500/20'
-                            : tech.level === 'secondary'
-                            ? 'bg-white/[0.04] text-foreground/80 border border-white/[0.06] hover:bg-white/[0.08]'
-                            : 'bg-violet-500/10 text-violet-300 border border-violet-500/20 hover:bg-violet-500/20'
+        {/* Legend */}
+        <AnimatedSection delay={0.05}>
+          <div className="flex items-center gap-6 mb-10">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-400" />
+              <span className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Daily use</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-white/20" />
+              <span className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Familiar</span>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {categories.map((category, i) => (
+            <AnimatedSection key={category.title} delay={i * 0.08}>
+              <div className="glass p-6 md:p-8 h-full group hover:border-white/[0.08] transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.04)] relative overflow-hidden">
+                {/* Subtle index watermark */}
+                <span className="absolute top-4 right-5 text-[3rem] font-bold text-white/[0.02] font-mono select-none leading-none">
+                  {category.index}
+                </span>
+
+                <div className="relative">
+                  {/* Category header */}
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="text-xs font-mono text-indigo-400/50 tabular-nums">
+                      {category.index}
+                    </span>
+                    <h3 className="text-sm font-semibold text-foreground tracking-wide uppercase">
+                      {category.title}
+                    </h3>
+                    <div className="flex-1 h-px bg-gradient-to-r from-white/[0.06] to-transparent" />
+                  </div>
+
+                  {/* Tech pills */}
+                  <div className="flex flex-wrap gap-2.5">
+                    {category.techs.map((tech, j) => (
+                      <motion.span
+                        key={tech.name}
+                        custom={j}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={pillVariants}
+                        className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[13px] font-medium cursor-default transition-all duration-200 hover:-translate-y-0.5 ${
+                          tech.tier === 'daily'
+                            ? 'bg-indigo-500/[0.08] text-indigo-300 border border-indigo-500/20 hover:bg-indigo-500/[0.15] hover:border-indigo-500/30 hover:shadow-[0_0_12px_rgba(99,102,241,0.12)]'
+                            : 'bg-white/[0.03] text-foreground/70 border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.1] hover:text-foreground/90'
                         }`}
                       >
+                        {tech.tier === 'daily' && (
+                          <span className="w-1 h-1 rounded-full bg-indigo-400 shrink-0" />
+                        )}
                         {tech.name}
-                      </span>
-                    </StaggerItem>
-                  ))}
-                </StaggerContainer>
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </AnimatedSection>
           ))}

@@ -2,33 +2,30 @@
 
 import { AnimatedSection } from '@/components/ui/animated-section';
 import { SectionHeading } from '@/components/ui/section-heading';
-import { Code2, Layers, Zap, Users } from 'lucide-react';
+import { Rocket, Brain, Code2, MapPin, Briefcase, Bot } from 'lucide-react';
 
-const highlights = [
+const aboutCards = [
   {
     icon: Code2,
-    title: 'Full-Stack Engineering',
-    description:
-      'Building production applications across the stack—React and TypeScript on the frontend, C# and .NET on the backend, SQL Server for data persistence.',
+    title: 'Software Engineer',
+    text: 'I build enterprise applications at MAQ Software using React, TypeScript, C#, and .NET. Promoted from Associate Software Engineer to Software Engineer I within my first year.',
   },
   {
-    icon: Layers,
-    title: 'Enterprise Software',
-    description:
-      'Developing and validating features for enterprise platforms—migrating legacy systems to modern React, building admin dashboards, and shipping scalable .NET APIs.',
+    icon: Brain,
+    title: 'Building with AI',
+    text: 'I\'m exploring how AI can make software more capable, useful, and intuitive — from LLMs and agentic systems to building real applications with OpenAI APIs.',
   },
   {
-    icon: Zap,
-    title: 'Automation & Quality',
-    description:
-      'Designing test strategies and building automation frameworks with Playwright to ensure software quality at scale across complex enterprise workflows.',
+    icon: Rocket,
+    title: 'How I Work',
+    text: 'I enjoy solving real engineering problems — from modernizing legacy systems to building reliable automation. I care about software that performs in production, not just in theory.',
   },
-  {
-    icon: Users,
-    title: 'Cross-functional Collaboration',
-    description:
-      'Working closely with frontend developers, backend engineers, product managers, and QA teams throughout the software development lifecycle.',
-  },
+];
+
+const chips = [
+  { icon: MapPin, text: 'India' },
+  { icon: Briefcase, text: 'MAQ Software' },
+  { icon: Bot, text: 'AI Enthusiast' },
 ];
 
 export function About() {
@@ -39,43 +36,47 @@ export function About() {
         <AnimatedSection>
           <SectionHeading
             label="About"
-            title="Engineering software that matters"
-            description="I work at the intersection of software engineering and quality—building features, investigating production issues, and ensuring enterprise applications meet the highest standards."
+            title="Beyond the Resume"
           />
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {highlights.map((item, i) => (
-            <AnimatedSection key={item.title} delay={i * 0.1}>
-              <div className="glass p-6 md:p-8 group hover-lift">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500/20 transition-colors">
-                    <item.icon size={22} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
+        <div className="grid md:grid-cols-3 gap-6 mb-10">
+          {aboutCards.map((card, i) => (
+            <AnimatedSection key={card.title} delay={i * 0.12}>
+              <div className="glass p-6 md:p-8 h-full group hover-lift hover:border-indigo-500/20 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.08)]">
+                <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 w-fit mb-4 group-hover:bg-indigo-500/20 group-hover:scale-105 transition-all duration-300">
+                  <card.icon size={22} />
                 </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  {card.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {card.text}
+                </p>
               </div>
             </AnimatedSection>
           ))}
         </div>
 
         <AnimatedSection delay={0.4}>
-          <div className="mt-12 glass p-6 md:p-8">
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              At MAQ Software, I build enterprise software—from feature-rich Admin Dashboards with real-time controls, 
-              to scalable .NET Core Web APIs using CQRS patterns. I&apos;ve migrated 15+ legacy ASP.NET pages to modern 
-              React components, improving UI responsiveness by 40%. My work spans the full development lifecycle: 
-              reviewing requirements, building React/TypeScript frontends, developing C#/.NET backends, and designing 
-              comprehensive automation strategies. I approach every problem with an engineering mindset—understanding 
-              not just <em>what</em> to build, but <em>why</em> architectural decisions matter at scale.
+          <div className="glass p-6 md:p-8 max-w-3xl border-l-2 border-indigo-500/40 mb-8">
+            <p className="text-muted-foreground leading-relaxed text-lg italic">
+              &ldquo;Build with curiosity. Ship with confidence.&rdquo;
             </p>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.5}>
+          <div className="flex flex-wrap gap-3">
+            {chips.map((chip) => (
+              <span
+                key={chip.text}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] text-sm text-muted-foreground"
+              >
+                <chip.icon size={14} className="text-indigo-400" />
+                {chip.text}
+              </span>
+            ))}
           </div>
         </AnimatedSection>
       </div>
